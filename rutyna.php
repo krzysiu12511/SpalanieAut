@@ -70,9 +70,11 @@ if(isset($_SESSION['User']))
 									</tr>
 								</thead>
 								<tbody><?php
-									$data = date('Y-m');
-									$result = mysqli_query($conn,"SELECT * FROM rutyna where data <= '$data' order by data desc ");
-									
+									$today = date('Y-m-d');
+									$first_day_of_month = date('Y-m-01');
+									$result = mysqli_query($conn, "SELECT * FROM rutyna WHERE data BETWEEN '$first_day_of_month' AND '$today' ORDER BY data DESC");
+																											
+																		
 									$resultikony = mysqli_query($conn,"SELECT id_ikony,nazwa FROM ikony where status = 1");
 									$nazwy = array();
 									$id_ikon = array();

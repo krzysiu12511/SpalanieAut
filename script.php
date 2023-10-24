@@ -38,14 +38,19 @@ if($kategoria == "Zaloguj")
 		$row = mysqli_fetch_assoc($result);
 		$miesiac_z_bazy = date('m', strtotime($row['data']));
 		$aktualny_miesiac = date('m');
-		if($aktualny_miesiac != $miesiac_z_bazy){
+		// Pobieranie miesiąca z bazy danych
+		$result = mysqli_query($conn, "SELECT COUNT(*) as count FROM rutyna WHERE MONTH(data) = $aktualny_miesiac");
+		$row = mysqli_fetch_assoc($result);
+		$miesiac_z_bazy = $row['count'];
+
+		if ($aktualny_miesiac != $miesiac_z_bazy) {
 			$ilosc_dni_w_miesiacu = date("t");
-			$i=0;
+			$i = 0;
 			$pierwszy_dzien_w_miesiacu = date('Y-m-01');
-			while($i < $ilosc_dni_w_miesiacu){
-			mysqli_query($conn, "INSERT INTO `rutyna`(`data`, `pierwsza`, `druga`, `trzecia`, `czwarta`, `piata`, `szosta`, `siodma`, `osma`,`dziewiata`,`dziesiata`,`jedenasta`,`dwunasta`,`trzynasta`,`czternasta`,`pietnasta`) VALUES ('$pierwszy_dzien_w_miesiacu',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)");
-			$pierwszy_dzien_w_miesiacu = date('Y-m-d', strtotime($pierwszy_dzien_w_miesiacu . ' +1 day'));
-			$i++;
+			while ($i < $ilosc_dni_w_miesiacu) {
+				mysqli_query($conn, "INSERT INTO `rutyna`(`data`, `pierwsza`, `druga`, `trzecia`, `czwarta`, `piata`, `szosta`, `siodma`, `osma`,`dziewiata`,`dziesiata`,`jedenasta`,`dwunasta`,`trzynasta`,`czternasta`,`pietnasta`) VALUES ('$pierwszy_dzien_w_miesiacu',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)");
+				$pierwszy_dzien_w_miesiacu = date('Y-m-d', strtotime($pierwszy_dzien_w_miesiacu . ' +1 day'));
+				$i++;
 			}
 		}
 		header("location:start.php");
