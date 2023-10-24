@@ -1,9 +1,5 @@
 <?php
-/*$servername = "51.38.131.172";
-$username = "prosolve_kris";
-$password = "TbPXbUufe3#qmz";
-$dbname = "prosolve_prktk";
-*/
+
 $servername = "localhost";
 $username = "root";
 $password = "";
