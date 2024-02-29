@@ -21,13 +21,16 @@ if(isset($_GET["kategoria"])){
 	
 if($kategoria == "Zaloguj")
 {
+	$stmt = $conn->prepare("SELECT id FROM user WHERE login = ? AND pass = ?");
+	$stmt->bind_param("ss", $Login, $Paswd);
+
 	$Login = $_POST["Login"];
 	$Paswd = $_POST["Paswd"];
-	$result = mysqli_query($conn, "SELECT id FROM user WHERE login='$Login' AND pass='$Paswd'");
-	//$row = mysqli_fetch_array($result);
-	//$id = $row['id'];
-	$ile_u = mysqli_num_rows($result);
-	if ($ile_u > 0){
+
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if ($result->num_rows > 0){
 		$_SESSION['User']=$Login;
 		$sesj = session_id();
 		$data = date('Y-m-d');
